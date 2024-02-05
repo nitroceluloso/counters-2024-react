@@ -1,0 +1,29 @@
+#landing {
+    display: flex;
+    flex-direction: column;
+
+    & > * {
+        margin: auto;
+    }
+
+    #image_container {
+        margin-top: 7.2rem;
+        margin-bottom: 6.25rem;
+    }
+
+    #text_container {
+        max-width: 19rem;
+        margin-bottom: 1.25rem;
+
+        & > * {
+            text-align: center;
+        }
+        h1 {
+            font-size: 1.37rem;
+        }
+        p {
+            font-size: 1rem;
+            font-weight: var(--font-thin);
+        }
+    }
+}
