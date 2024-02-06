@@ -3,14 +3,16 @@ import Landing from "./screens/landing";
 import Counters from "./screens/counters";
 
 function App() {
-  const [isLandingActive, setLandingActive] = useState<boolean>(false);
-  // const continueClick = () => setLandingActive(false);
+  const [isLandingActive, setLandingActive] = useState<boolean>(true);
+  const continueClick = () => setLandingActive(false);
 
   return (
     <>
-      {
-        isLandingActive ? <Landing /> : <Counters />
-      }
+      {isLandingActive ? (
+        <Landing clickContinue={continueClick} />
+      ) : (
+        <Counters />
+      )}
     </>
   );
 }
