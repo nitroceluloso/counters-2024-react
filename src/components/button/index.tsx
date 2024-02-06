@@ -1,10 +1,14 @@
 import { className } from "../../utils/classname";
 import "./button.css";
 
-interface ButtonProps {
-  text: string;
+type IconVariant = '';
+
+type ButtonProps = {
+  text?: string;
   variant?: "main" | "secundary";
-}
+  icon?: IconVariant;
+  onClick?: () => void;
+};
 
 function Button({ text, variant = "main" }: ButtonProps) {
   const classString = className("button", variant);
