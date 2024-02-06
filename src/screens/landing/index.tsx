@@ -2,7 +2,11 @@ import Button from "../../components/button";
 import logo from "../../assets/Main.png";
 import "./landing.css";
 
-function Landing() {
+type LandingProps = {
+  clickContinue: () => void;
+};
+
+function Landing({ clickContinue }: LandingProps) {
   return (
     <div id="landing">
       <div id="image_container">
@@ -18,7 +22,7 @@ function Landing() {
       </div>
 
       <div id="button_container">
-        <Button text="Get started" />
+        <Button text="Get started" onClick={clickContinue} />
       </div>
     </div>
   );

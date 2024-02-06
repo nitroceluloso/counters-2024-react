@@ -1,0 +1,12 @@
+#counter {
+    display: grid;
+    grid-template-rows: 4rem calc(100vh - 8.5rem) 4.5rem;
+
+    & > div:first-child {
+        padding: 1rem;
+    }
+
+    & > div:last-child {
+        padding: 0 1rem 1rem 1rem;
+    }
+}

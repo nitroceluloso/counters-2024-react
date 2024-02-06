@@ -1,0 +1,23 @@
+#searchbox {
+    display: flex;
+    justify-content: space-between;
+
+    & > div:first-child {
+        width: 100%;
+        margin-right: 0.75rem;
+
+        &:only-child {
+            margin-right: 0;
+        }
+    }
+
+    input[type="text"] {
+        background: url("/Glass.svg") no-repeat scroll 1.37rem 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(0, 0, 0, 0.02);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        font-size: 1rem;
+        padding: 1rem 1.37rem 1rem 3.5rem;
+        width: 100%;
+    }
+}

@@ -9,3 +9,12 @@
     --font-thiner: 500;
     --font-thin: 400;
 }
+
+html,
+body {
+    margin: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
