@@ -1,9 +1,11 @@
 :root {
     --orange: rgba(255, 149, 0, 1);
     --orange-light: rgba(234, 213, 183, 1);
+    --orange-dark: rgba(255, 149, 0, 0.2);
     --red: rgba(255, 59, 48, 1);
     --white: rgba(251, 251, 251, 1);
     --silver: rgba(220, 220, 223, 1);
+    --gray: rgba(136, 139, 144, 1);
 
     --font-regular: 600;
     --font-thiner: 500;

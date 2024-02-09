@@ -1,19 +1,21 @@
-import Button from "../button";
+import Button from "@/components/button";
 import "./searchbox.css";
 
-function Searchbox() {
+type SearchBoxProps = {
+  showAction: boolean;
+};
+
+function Searchbox({ showAction = false }: SearchBoxProps) {
   return (
     <div id="searchbox">
       <div>
-        <input
-          type="text"
-          name="searchbox"
-          placeholder="Search counters"
-        />
+        <input type="text" name="searchbox" placeholder="Search counters" />
       </div>
-      <div>
-        <Button text="Cancel" />
-      </div>
+      {showAction && (
+        <div>
+          <Button text="Cancel" />
+        </div>
+      )}
     </div>
   );
 }

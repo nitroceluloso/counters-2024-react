@@ -9,11 +9,11 @@ function ActionNav({ showOptional = false }: ActionNavProps) {
   return (
     <div id="action-nav">
       <div>
-        <Button icon="add" />
+        <Button icon="add_white" />
       </div>
       {showOptional && (
         <div id="optional">
-          <Button icon="delete" />
+          <Button icon="trash" />
           <Button icon="share" />
         </div>
       )}
