@@ -1,3 +1,4 @@
+// import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 type CounterElementApi = {
@@ -21,6 +22,11 @@ export function useCounters() {
       refetchOnWindowFocus: false,
     },
   );
+  // const [counterList, setCounterList] = useState<CounterListApi>([]);
+
+  // useEffect(() => {
+  //   setCounterList(data!);
+  // }, [data]);
 
   return {
     isLoading,
