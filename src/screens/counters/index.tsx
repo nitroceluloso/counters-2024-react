@@ -1,16 +1,20 @@
-import ActionNav from "../../components/action-nav";
-import CounterList from "../../components/counter-list";
-import Searchbox from "../../components/searchbox";
+import ActionNav from "@/components/action-nav";
+import CounterList from "@/components/counter-list";
+import Searchbox from "@/components/searchbox";
+import { useCounters } from "@/services/counter";
+
 import "./counters.css";
 
 function Counters() {
+  const { isLoading, data, refetch } = useCounters();
+
   return (
     <div id="counter-container">
       <div>
-        <Searchbox />
+        <Searchbox showAction={false} />
       </div>
       <div>
-        <CounterList list={[]} />
+        <CounterList isLoading={isLoading} list={data} refetch={refetch} />
       </div>
       <div>
         <ActionNav />
