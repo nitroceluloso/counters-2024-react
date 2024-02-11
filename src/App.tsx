@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Landing from "./screens/landing";
 import Counters from "./screens/counters";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
-  const [isLandingActive, setLandingActive] = useState<boolean>(true);
+  const [isLandingActive, setLandingActive] = useState<boolean>(false);
   const continueClick = () => setLandingActive(false);
 
   return (
@@ -11,7 +14,9 @@ function App() {
       {isLandingActive ? (
         <Landing clickContinue={continueClick} />
       ) : (
-        <Counters />
+        <QueryClientProvider client={queryClient}>
+          <Counters />
+        </QueryClientProvider>
       )}
     </>
   );
