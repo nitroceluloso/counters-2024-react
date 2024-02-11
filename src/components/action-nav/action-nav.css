@@ -5,7 +5,11 @@
     flex-direction: row-reverse;
     justify-content: space-between;
 
-    & #optional > *:first-child {
-        margin-right: 1rem;
+    #optional {
+        display: flex;
+
+        & > button:first-child {
+            margin-right: 1rem;
+        }
     }
 }

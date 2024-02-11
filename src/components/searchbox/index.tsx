@@ -13,7 +13,7 @@ function Searchbox({ showAction = false }: SearchBoxProps) {
       </div>
       {showAction && (
         <div>
-          <Button text="Cancel" />
+          <Button text="Cancel" variant="action_third" />
         </div>
       )}
     </div>
