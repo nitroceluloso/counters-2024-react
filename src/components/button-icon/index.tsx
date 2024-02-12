@@ -16,7 +16,7 @@ type ButtonIconProps = {
 function ButtonIcon({ icon, onClick = () => {} }: ButtonIconProps) {
   const iconSrc = getIconButton(icon);
   return (
-    <div className="ButtonIcon" role="button" onClick={onClick}>
+    <div className="ButtonIcon" role="button" onClick={onClick} tabIndex={0}>
       <img src={iconSrc} alt="" />
     </div>
   );
