@@ -17,7 +17,7 @@ function Counters() {
         <CounterList isLoading={isLoading} list={data} refetch={refetch} />
       </div>
       <div>
-        <ActionNav />
+        <ActionNav showOptional={true} />
       </div>
     </div>
   );

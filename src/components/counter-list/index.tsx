@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Button from "@/components/button";
+// import Button from "@/components/button";
 import CounterElement from "@/components/counter-element";
 import { CounterListApi } from "@/services/counter";
 
@@ -8,6 +8,7 @@ import CounterLoading from "./components/counter-loading";
 import CounterEmpty from "./components/counter-empty";
 
 import "./counterList.css";
+import ButtonIcon from "../button-icon";
 
 type CounterListProps = {
   list?: CounterListApi;
@@ -36,7 +37,7 @@ function CounterList({ list, isLoading, refetch }: CounterListProps) {
       <div id="counter-bar">
         <span> {itemsCount} items </span>
         <span> {itemsSum} times </span>
-        <Button icon="refresh_black" isTransparent onClick={refetch} />
+        <ButtonIcon icon="refresh_black" onClick={refetch} />
       </div>
       <div id="counter-list">
         {list?.map(({ id, title, count }) => (

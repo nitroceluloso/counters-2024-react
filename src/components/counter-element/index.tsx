@@ -1,4 +1,4 @@
-import Button from "../button";
+import ButtonIcon from "../button-icon";
 import "./counterElement.css";
 
 type CounterElementProps = {
@@ -24,17 +24,13 @@ function CounterElement({
       </div>
       <div>
         <div>
-          <Button icon={minusIcon} ariaLabel="decrece counter" isTransparent />
+          <ButtonIcon icon={minusIcon} />
         </div>
         <div>
           <span className={counterClass}>{value}</span>
         </div>
         <div>
-          <Button
-            icon="add_orange"
-            ariaLabel="increment counter"
-            isTransparent
-          />
+          <ButtonIcon icon="add" />
         </div>
       </div>
     </div>
