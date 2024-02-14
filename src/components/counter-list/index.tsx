@@ -1,33 +1,34 @@
 import { useState } from "react";
-
-// import Button from "@/components/button";
-import CounterElement from "@/components/counter-element";
-import { CounterListApi } from "@/services/counter";
+import { CounterListApi } from "@/services/counter/counter.services";
 
 import CounterLoading from "./components/counter-loading";
 import CounterEmpty from "./components/counter-empty";
+import CounterElement from "@/components/counter-element";
+import ButtonIcon from "../button-icon";
+
+import { useUpateCounter } from "@/services/counter";
+import {
+  getOnIncrementAndDecrement,
+  getOnSelect,
+} from "./counterElement.helper";
 
 import "./counterList.css";
-import ButtonIcon from "../button-icon";
 
 type CounterListProps = {
   list?: CounterListApi;
   isLoading: boolean;
+  isError: boolean;
   refetch: () => void;
 };
 
-function CounterList({ list, isLoading, refetch }: CounterListProps) {
-  if (isLoading) return <CounterLoading />;
-  if (list?.length === 0) return <CounterEmpty />;
-
+function CounterList({ list, isLoading, refetch, isError }: CounterListProps) {
   const [selectedCounters, setSelectedCounters] = useState(new Map());
-  const setSelected = (id: string) => () => {
-    const flagSeted = selectedCounters.has(id)
-      ? !selectedCounters.get(id)
-      : true;
-    selectedCounters.set(id, flagSeted);
-    setSelectedCounters(new Map(selectedCounters));
-  };
+  const { mutate: updateCounter } = useUpateCounter();
+
+  const [onDecrement, onIncrement] = getOnIncrementAndDecrement(updateCounter);
+
+  if (isLoading) return <CounterLoading />;
+  if (!isLoading && !isError && list!.length === 0) return <CounterEmpty />;
 
   const itemsCount = list?.length;
   const itemsSum = list?.reduce((acm, act) => acm + act.count, 0);
@@ -46,16 +47,11 @@ function CounterList({ list, isLoading, refetch }: CounterListProps) {
             label={title}
             value={count}
             isSelected={selectedCounters.get(id)}
-            onSelect={setSelected(id)}
+            onSelect={getOnSelect(selectedCounters, setSelectedCounters, id)}
+            onDecrement={onDecrement(id)}
+            onIncrement={onIncrement(id)}
           />
         ))}
-        {/* <CounterElement label="Cups of coffe" value={0} isSelected={false} />
-        <CounterElement label="Cups of coffe" value={5} isSelected />
-        <CounterElement
-          label="Number of times I’ve forgotten my mother’s name because I was high on Frugelés."
-          value={5}
-          isSelected={false}
-        /> */}
       </div>
     </div>
   );

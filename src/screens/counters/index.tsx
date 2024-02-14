@@ -6,7 +6,7 @@ import { useCounters } from "@/services/counter";
 import "./counters.css";
 
 function Counters() {
-  const { isLoading, data, refetch } = useCounters();
+  const { isLoading, data, refetch, isError } = useCounters();
 
   return (
     <div id="counter-container">
@@ -14,7 +14,12 @@ function Counters() {
         <Searchbox showAction={false} />
       </div>
       <div>
-        <CounterList isLoading={isLoading} list={data} refetch={refetch} />
+        <CounterList
+          isLoading={isLoading}
+          list={data}
+          refetch={refetch}
+          isError={isError}
+        />
       </div>
       <div>
         <ActionNav showOptional={true} />
