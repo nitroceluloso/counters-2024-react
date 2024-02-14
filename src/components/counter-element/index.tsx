@@ -6,6 +6,8 @@ type CounterElementProps = {
   value: number;
   onSelect: () => void;
   isSelected: boolean;
+  onIncrement?: () => void;
+  onDecrement?: () => void;
 };
 
 function CounterElement({
@@ -13,6 +15,8 @@ function CounterElement({
   value,
   isSelected = false,
   onSelect,
+  onIncrement,
+  onDecrement,
 }: CounterElementProps) {
   const minusIcon = value === 0 ? "minus_gray" : "minus_orange";
   const counterClass = value === 0 ? "zero" : "";
@@ -24,13 +28,13 @@ function CounterElement({
       </div>
       <div>
         <div>
-          <ButtonIcon icon={minusIcon} />
+          <ButtonIcon icon={minusIcon} onClick={onDecrement} />
         </div>
         <div>
           <span className={counterClass}>{value}</span>
         </div>
         <div>
-          <ButtonIcon icon="add" />
+          <ButtonIcon icon="add" onClick={onIncrement} />
         </div>
       </div>
     </div>
