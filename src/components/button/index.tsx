@@ -9,12 +9,12 @@ interface ButtonProps {
   icon?: IconVariant;
   onClick?: () => void;
   ariaLabel?: string;
-  variant: "action_primary" | "action_secundary" | "action_third";
+  variant: "primary" | "secundary" | "third" | "danger";
 }
 
 function Button({
   text = "",
-  variant = "action_secundary",
+  variant = "secundary",
   icon,
   onClick,
   ariaLabel = "",

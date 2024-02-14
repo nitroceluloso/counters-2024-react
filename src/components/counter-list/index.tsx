@@ -13,21 +13,28 @@ import {
 } from "./counterElement.helper";
 
 import "./counterList.css";
+import CounterListError from "./components/counter-error";
 
 type CounterListProps = {
   list?: CounterListApi;
   isLoading: boolean;
   isError: boolean;
-  refetch: () => void;
+  getCounters: () => void;
 };
 
-function CounterList({ list, isLoading, refetch, isError }: CounterListProps) {
+function CounterList({
+  list,
+  isLoading,
+  getCounters,
+  isError,
+}: CounterListProps) {
   const [selectedCounters, setSelectedCounters] = useState(new Map());
   const { mutate: updateCounter } = useUpateCounter();
 
   const [onDecrement, onIncrement] = getOnIncrementAndDecrement(updateCounter);
 
   if (isLoading) return <CounterLoading />;
+  if (isError) return <CounterListError retry={getCounters} />;
   if (!isLoading && !isError && list!.length === 0) return <CounterEmpty />;
 
   const itemsCount = list?.length;
@@ -38,7 +45,7 @@ function CounterList({ list, isLoading, refetch, isError }: CounterListProps) {
       <div id="counter-bar">
         <span> {itemsCount} items </span>
         <span> {itemsSum} times </span>
-        <ButtonIcon icon="refresh_black" onClick={refetch} />
+        <ButtonIcon icon="refresh_black" onClick={getCounters} />
       </div>
       <div id="counter-list">
         {list?.map(({ id, title, count }) => (

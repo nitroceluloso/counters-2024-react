@@ -17,8 +17,8 @@ function Counters() {
         <CounterList
           isLoading={isLoading}
           list={data}
-          refetch={refetch}
           isError={isError}
+          getCounters={refetch}
         />
       </div>
       <div>
