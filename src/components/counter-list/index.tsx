@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { CounterListApi } from "@/services/counter/counter.services";
 
 import CounterLoading from "./components/counter-loading";
@@ -7,10 +6,7 @@ import CounterElement from "@/components/counter-element";
 import ButtonIcon from "../button-icon";
 
 import { useUpateCounter } from "@/services/counter";
-import {
-  getOnIncrementAndDecrement,
-  getOnSelect,
-} from "./counterElement.helper";
+import { getOnIncrementAndDecrement } from "./counterElement.helper";
 
 import "./counterList.css";
 import CounterListError from "./components/counter-error";
@@ -19,22 +15,24 @@ type CounterListProps = {
   list?: CounterListApi;
   isLoading: boolean;
   isError: boolean;
-  getCounters: () => void;
+  refetch: () => void;
+  selectedCounter: Map<string, boolean>;
+  getOnSelectCounter: (id: string) => () => void;
 };
 
 function CounterList({
   list,
   isLoading,
-  getCounters,
+  refetch,
   isError,
+  selectedCounter,
+  getOnSelectCounter,
 }: CounterListProps) {
-  const [selectedCounters, setSelectedCounters] = useState(new Map());
   const { mutate: updateCounter } = useUpateCounter();
-
   const [onDecrement, onIncrement] = getOnIncrementAndDecrement(updateCounter);
 
   if (isLoading) return <CounterLoading />;
-  if (isError) return <CounterListError retry={getCounters} />;
+  if (isError) return <CounterListError retry={refetch} />;
   if (!isLoading && !isError && list!.length === 0) return <CounterEmpty />;
 
   const itemsCount = list?.length;
@@ -45,7 +43,7 @@ function CounterList({
       <div id="counter-bar">
         <span> {itemsCount} items </span>
         <span> {itemsSum} times </span>
-        <ButtonIcon icon="refresh_black" onClick={getCounters} />
+        <ButtonIcon icon="refresh_black" onClick={refetch} />
       </div>
       <div id="counter-list">
         {list?.map(({ id, title, count }) => (
@@ -53,8 +51,8 @@ function CounterList({
             key={id}
             label={title}
             value={count}
-            isSelected={selectedCounters.get(id)}
-            onSelect={getOnSelect(selectedCounters, setSelectedCounters, id)}
+            isSelected={selectedCounter.get(id)}
+            onSelect={getOnSelectCounter(id)}
             onDecrement={onDecrement(id)}
             onIncrement={onIncrement(id)}
           />

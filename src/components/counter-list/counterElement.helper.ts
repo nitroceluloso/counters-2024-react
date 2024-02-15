@@ -1,15 +1,3 @@
-export function getOnSelect(
-  selected: Map<string, boolean>,
-  setSelected: (newState: Map<string, boolean>) => void,
-  id: string,
-) {
-  return function () {
-    const flagSeted = selected.has(id) ? !selected.get(id) : true;
-    selected.set(id, flagSeted);
-    setSelected(new Map(selected));
-  };
-}
-
 type updateCounterParam = {
   id: string;
   isIncrement: boolean;

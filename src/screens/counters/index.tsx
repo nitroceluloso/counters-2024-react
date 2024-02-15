@@ -4,9 +4,12 @@ import Searchbox from "@/components/searchbox";
 import { useCounters } from "@/services/counter";
 
 import "./counters.css";
+import { useSelectCounters } from "./counters.helper";
 
 function Counters() {
   const { isLoading, data, refetch, isError } = useCounters();
+  const { getOnSelectCounters, selectedCounters, isAnyCounterSelected } =
+    useSelectCounters();
 
   return (
     <div id="counter-container">
@@ -18,11 +21,13 @@ function Counters() {
           isLoading={isLoading}
           list={data}
           isError={isError}
-          getCounters={refetch}
+          selectedCounter={selectedCounters}
+          getOnSelectCounter={getOnSelectCounters}
+          refetch={refetch}
         />
       </div>
       <div>
-        <ActionNav showOptional={true} />
+        <ActionNav showOptional={isAnyCounterSelected} />
       </div>
     </div>
   );
