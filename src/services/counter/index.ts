@@ -1,15 +1,16 @@
-// import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { getCounters, updateCounter } from "./counter.services";
+import { COUNTER_QUERY_KEYS } from "./counter.constant";
 import { queryClient } from "@/App";
 
 export function useCounters() {
-  const { isLoading, isError, data, error, refetch } = useQuery(
-    "counterList",
+  const queryOptions = {
+    refetchOnWindowFocus: false,
+  };
+  const { isLoading, isError, data, error, refetch, isFetching } = useQuery(
+    COUNTER_QUERY_KEYS.GET_LIST,
     getCounters,
-    {
-      refetchOnWindowFocus: false,
-    },
+    queryOptions,
   );
   // const [counterList, setCounterList] = useState<CounterListApi>([]);
 
@@ -23,13 +24,16 @@ export function useCounters() {
     data,
     error,
     refetch,
+    isFetching,
   };
 }
 
 export function useUpateCounter() {
   return useMutation(updateCounter, {
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["counterList"] });
+      queryClient.invalidateQueries({
+        queryKey: [COUNTER_QUERY_KEYS.GET_LIST],
+      });
     },
   });
 }
