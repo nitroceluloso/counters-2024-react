@@ -5,7 +5,7 @@ type CounterElementProps = {
   label: string;
   value: number;
   onSelect: () => void;
-  isSelected: boolean;
+  isSelected: boolean | undefined;
   onIncrement?: () => void;
   onDecrement?: () => void;
 };

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { CounterListApi } from "@/services/counter/counter.services";
 
 import CounterLoading from "./components/counter-loading";
@@ -7,10 +6,7 @@ import CounterElement from "@/components/counter-element";
 import ButtonIcon from "../button-icon";
 
 import { useUpateCounter } from "@/services/counter";
-import {
-  getOnIncrementAndDecrement,
-  getOnSelect,
-} from "./counterElement.helper";
+import { getOnIncrementAndDecrement } from "./counterElement.helper";
 
 import "./counterList.css";
 
@@ -19,12 +15,19 @@ type CounterListProps = {
   isLoading: boolean;
   isError: boolean;
   refetch: () => void;
+  selectedCounter: Map<string, boolean>;
+  getOnSelectCounter: (id: string) => () => void;
 };
 
-function CounterList({ list, isLoading, refetch, isError }: CounterListProps) {
-  const [selectedCounters, setSelectedCounters] = useState(new Map());
+function CounterList({
+  list,
+  isLoading,
+  refetch,
+  isError,
+  selectedCounter,
+  getOnSelectCounter,
+}: CounterListProps) {
   const { mutate: updateCounter } = useUpateCounter();
-
   const [onDecrement, onIncrement] = getOnIncrementAndDecrement(updateCounter);
 
   if (isLoading) return <CounterLoading />;
@@ -46,8 +49,8 @@ function CounterList({ list, isLoading, refetch, isError }: CounterListProps) {
             key={id}
             label={title}
             value={count}
-            isSelected={selectedCounters.get(id)}
-            onSelect={getOnSelect(selectedCounters, setSelectedCounters, id)}
+            isSelected={selectedCounter.get(id)}
+            onSelect={getOnSelectCounter(id)}
             onDecrement={onDecrement(id)}
             onIncrement={onIncrement(id)}
           />
