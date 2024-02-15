@@ -9,20 +9,26 @@
     display: flex;
     align-items: center;
 
-    &.action_primary {
+    &.primary {
         color: var(--white);
         background-color: var(--orange);
     }
 
-    &.action_secundary {
+    &.secundary {
         color: var(--orange);
         background-color: var(--white);
         border: 1px solid rgba(0, 0, 0, 0.1);
     }
 
-    &.action_third {
+    &.third {
         height: 3rem;
         color: var(--black);
+        background-color: var(--white);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    &.danger {
+        color: var(--red);
         background-color: var(--white);
         border: 1px solid rgba(0, 0, 0, 0.1);
     }

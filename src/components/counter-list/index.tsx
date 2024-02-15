@@ -9,6 +9,7 @@ import { useUpateCounter } from "@/services/counter";
 import { getOnIncrementAndDecrement } from "./counterElement.helper";
 
 import "./counterList.css";
+import CounterListError from "./components/counter-error";
 
 type CounterListProps = {
   list?: CounterListApi;
@@ -31,6 +32,7 @@ function CounterList({
   const [onDecrement, onIncrement] = getOnIncrementAndDecrement(updateCounter);
 
   if (isLoading) return <CounterLoading />;
+  if (isError) return <CounterListError retry={refetch} />;
   if (!isLoading && !isError && list!.length === 0) return <CounterEmpty />;
 
   const itemsCount = list?.length;

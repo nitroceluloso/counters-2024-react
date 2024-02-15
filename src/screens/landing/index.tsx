@@ -22,7 +22,7 @@ function Landing({ clickContinue }: LandingProps) {
       </div>
 
       <div id="button_container">
-        <Button text="Get started" onClick={clickContinue} />
+        <Button variant="primary" text="Get started" onClick={clickContinue} />
       </div>
     </div>
   );

@@ -20,10 +20,10 @@ function Counters() {
         <CounterList
           isLoading={isLoading}
           list={data}
-          refetch={refetch}
           isError={isError}
           selectedCounter={selectedCounters}
           getOnSelectCounter={getOnSelectCounters}
+          refetch={refetch}
         />
       </div>
       <div>
