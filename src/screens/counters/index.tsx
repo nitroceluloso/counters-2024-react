@@ -27,7 +27,10 @@ function Counters() {
         />
       </div>
       <div>
-        <ActionNav showOptional={isAnyCounterSelected} />
+        <ActionNav
+          showOptional={isAnyCounterSelected}
+          selectedCounters={selectedCounters}
+        />
       </div>
     </div>
   );

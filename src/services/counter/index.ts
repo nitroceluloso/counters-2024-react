@@ -1,5 +1,10 @@
 import { useMutation, useQuery } from "react-query";
-import { getCounters, updateCounter } from "./counter.services";
+import {
+  getCounters,
+  updateCounter,
+  deleteCounter,
+  CounterListApi,
+} from "./counter.services";
 import { COUNTER_QUERY_KEYS } from "./counter.constant";
 import { queryClient } from "@/App";
 
@@ -30,10 +35,28 @@ export function useCounters() {
 
 export function useUpateCounter() {
   return useMutation(updateCounter, {
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: [COUNTER_QUERY_KEYS.GET_LIST],
-      });
+    onSuccess: (data) => {
+      queryClient.setQueryData(
+        [COUNTER_QUERY_KEYS.GET_LIST],
+        (oldData: CounterListApi | undefined): CounterListApi => {
+          return oldData!.map((el) => (el.id === data.id ? data : el));
+        },
+      );
+    },
+  });
+}
+
+export function useDeleteCounter() {
+  return useMutation(deleteCounter, {
+    onSuccess: (idCounterDeleted) => {
+      queryClient.setQueryData(
+        [COUNTER_QUERY_KEYS.GET_LIST],
+        (oldData: CounterListApi | undefined): CounterListApi => {
+          return oldData!.filter((el) =>
+            el.id === idCounterDeleted ? false : true,
+          );
+        },
+      );
     },
   });
 }

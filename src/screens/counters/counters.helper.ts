@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export function useSelectCounters() {
-  const [selected, setSelected] = useState(new Map());
+  const [selected, setSelected] = useState(new Map<string, boolean>());
 
   const isAnyCounterSelected = Array.from(selected.entries()).some(
     (item: [string, boolean]) => item[1],
