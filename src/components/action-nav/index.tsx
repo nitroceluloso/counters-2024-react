@@ -1,22 +1,17 @@
 import { useDeleteCounter } from "@/services/counter";
 import Button from "../button";
 import "./action-nav.css";
-import { getIdListFromMap } from "./actionNave.helper";
 
 type ActionNavProps = {
   showOptional: boolean;
-  selectedCounters: Map<string, boolean>;
+  selectedCounters: string | undefined;
 };
 
 function ActionNav({ showOptional = false, selectedCounters }: ActionNavProps) {
   const { mutate: deleteSelected } = useDeleteCounter();
 
   const onDelete = () => {
-    const idList = getIdListFromMap(selectedCounters);
-
-    idList.forEach((id) => {
-      deleteSelected({ id });
-    });
+    deleteSelected({ id: selectedCounters! });
   };
 
   return (
