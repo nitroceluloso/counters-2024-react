@@ -8,8 +8,12 @@ import "./counters.css";
 
 function Counters() {
   const { isLoading, data, refetch, isError } = useCounters();
-  const { getOnSelectCounters, selectedCounters } = useSelectCounters();
-  const shouldDisplayOptions = selectedCounters ? true : false;
+  const {
+    getOnSelectCounters,
+    selectedCounters,
+    isCounterSelected,
+    selectedCounterTitle,
+  } = useSelectCounters();
 
   return (
     <div id="counter-container">
@@ -28,7 +32,8 @@ function Counters() {
       </div>
       <div>
         <ActionNav
-          showOptional={shouldDisplayOptions}
+          selectedCounterTitle={selectedCounterTitle}
+          showOptional={isCounterSelected}
           selectedCounters={selectedCounters}
         />
       </div>

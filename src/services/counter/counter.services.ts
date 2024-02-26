@@ -36,7 +36,7 @@ export async function updateCounter({
 }
 
 type DeleteCounterParams = {
-  id: string | string[];
+  id: string;
 };
 
 export async function deleteCounter({

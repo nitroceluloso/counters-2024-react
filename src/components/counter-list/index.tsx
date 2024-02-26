@@ -17,7 +17,7 @@ type CounterListProps = {
   isError: boolean;
   refetch: () => void;
   selectedCounter: string | undefined;
-  getOnSelectCounter: (id: string) => () => void;
+  getOnSelectCounter: (id: string, title: string) => () => void;
 };
 
 function CounterList({
@@ -28,7 +28,7 @@ function CounterList({
   selectedCounter,
   getOnSelectCounter,
 }: CounterListProps) {
-  const { mutate: updateCounter } = useUpateCounter();
+  const { mutateAsync: updateCounter } = useUpateCounter();
   const [onDecrement, onIncrement] = getOnIncrementAndDecrement(updateCounter);
 
   if (isLoading) return <CounterLoading />;
@@ -52,7 +52,7 @@ function CounterList({
             label={title}
             value={count}
             isSelected={selectedCounter === id}
-            onSelect={getOnSelectCounter(id)}
+            onSelect={getOnSelectCounter(id, title)}
             onDecrement={onDecrement(id)}
             onIncrement={onIncrement(id)}
           />
