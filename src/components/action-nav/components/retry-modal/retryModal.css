@@ -1,18 +1,4 @@
 .retryModal {
-    position: absolute;
-    margin: 50vh auto 0;
-    transform: translateY(-50%);
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    max-width: 18rem;
-    height: 11.5rem;
-    border: 1px solid black;
-    background-color: white;
-    padding: 1.25rem 1rem;
-
     h3,
     p {
         text-align: center;
@@ -26,9 +12,15 @@
     p {
         font-size: 1rem;
         font-weight: var(--font-thin);
+        padding-bottom: 1.3rem;
     }
 
     .buttonGroup {
         display: flex;
+        justify-content: center;
+
+        button:first-child {
+            margin-right: 0.62rem;
+        }
     }
 }

@@ -1,9 +1,10 @@
-import { useDeleteCounter } from "@/services/counter";
-import Button from "../button";
-import "./action-nav.css";
 import { useRef, useState } from "react";
+import Modal from "react-modal";
+import { useDeleteCounter } from "@/services/counter";
 import ConfirmationModal from "./components/confirmation-modal";
 import RetryModal from "./components/retry-modal";
+import Button from "../button";
+import "./action-nav.css";
 
 type ActionNavProps = {
   showOptional: boolean;
@@ -17,27 +18,27 @@ function ActionNav({
   selectedCounterTitle,
 }: ActionNavProps) {
   const deleteCallback = useRef(function () {});
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const [isModalRetryOpen, setModalRetry] = useState(false);
   const { mutate: deleteSelected } = useDeleteCounter();
 
-  const changeStatusModal = () => setModalOpen((isOpen) => !isOpen);
+  const changeStatusModal = () => setConfirmationModalOpen((isOpen) => !isOpen);
   const changeModalRetry = () => setModalRetry((isOpen) => !isOpen);
 
   const onDelete = () => {
     const fn = () => {
-      deleteSelected(
-        { id: selectedCounters! },
-        {
-          onSuccess: () => {
-            setModalOpen(false);
-            changeModalRetry();
-          },
-          onError: () => {
-            setModalRetry(true);
-          },
-        },
-      );
+      const payload = { id: selectedCounters! };
+      const onSuccess = () => {
+        setConfirmationModalOpen(false);
+        setModalRetry(false);
+      };
+      const onError = () => {
+        setModalRetry(true);
+      };
+      deleteSelected(payload, {
+        onSuccess,
+        onError,
+      });
     };
     fn();
     deleteCallback.current = fn;
@@ -58,19 +59,31 @@ function ActionNav({
           <Button icon="share" variant="secundary" />
         </div>
       )}
-      <ConfirmationModal
-        isOpen={isModalOpen}
-        changeStatus={changeStatusModal}
-        title={selectedCounterTitle}
-        confirmationCallback={onDelete}
-      />
+      <Modal
+        isOpen={isConfirmationModalOpen}
+        onRequestClose={changeStatusModal}
+        className="modal"
+        overlayClassName="dimmer"
+      >
+        <ConfirmationModal
+          changeStatus={changeStatusModal}
+          confirmationCallback={onDelete}
+          title={selectedCounterTitle}
+        />
+      </Modal>
 
-      <RetryModal
+      <Modal
+        className="modal"
         isOpen={isModalRetryOpen}
-        changeStatus={changeModalRetry}
-        confirmationCallback={deleteCallback.current}
-        title={selectedCounterTitle}
-      />
+        onRequestClose={changeModalRetry}
+        overlayClassName="dimmer"
+      >
+        <RetryModal
+          title={selectedCounterTitle}
+          changeStatus={changeModalRetry}
+          confirmationCallback={deleteCallback.current}
+        />
+      </Modal>
     </div>
   );
 }
