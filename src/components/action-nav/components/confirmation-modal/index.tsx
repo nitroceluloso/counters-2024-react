@@ -15,6 +15,10 @@ function ConfirmationModal({
   changeStatus,
   confirmationCallback,
 }: ConfirmationModalProps) {
+  const onClick = () => {
+    changeStatus();
+    confirmationCallback();
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -25,7 +29,7 @@ function ConfirmationModal({
       <p>This cannot be undone.</p>
       <div className="buttonGroup">
         <Button variant="secundary" text="Cancel" onClick={changeStatus} />
-        <Button variant="danger" text="Delete" onClick={confirmationCallback} />
+        <Button variant="danger" text="Delete" onClick={onClick} />
       </div>
     </Modal>
   );
