@@ -1,21 +1,20 @@
 import { useState } from "react";
 
 export function useSelectCounters() {
-  const [selected, setSelected] = useState(new Map());
+  const [selected, setSelected] = useState<string | undefined>(undefined);
+  const [selectedCounterTitle, setSelectedCounterTitle] = useState("");
+  const isCounterSelected = selected ? true : false;
 
-  const isAnyCounterSelected = Array.from(selected.entries()).some(
-    (item: [string, boolean]) => item[1],
-  );
-
-  const getOnSelectCounters = (id: string) => () => {
-    const flagSeted = selected.has(id) ? !selected.get(id) : true;
-    selected.set(id, flagSeted);
-    setSelected(new Map(selected));
+  const getOnSelectCounters = (id: string, title: string) => () => {
+    const valueToUpdate = selected === id ? undefined : id;
+    if (valueToUpdate) setSelectedCounterTitle(title);
+    setSelected(valueToUpdate);
   };
 
   return {
     selectedCounters: selected,
     getOnSelectCounters,
-    isAnyCounterSelected,
+    isCounterSelected,
+    selectedCounterTitle,
   };
 }

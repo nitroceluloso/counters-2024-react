@@ -34,3 +34,21 @@ export async function updateCounter({
   });
   return await req.json();
 }
+
+type DeleteCounterParams = {
+  id: string;
+};
+
+export async function deleteCounter({
+  id,
+}: DeleteCounterParams): Promise<string> {
+  const req = await fetch(COUNTER_URL_LIST, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ id }),
+  });
+
+  return await req.json();
+}

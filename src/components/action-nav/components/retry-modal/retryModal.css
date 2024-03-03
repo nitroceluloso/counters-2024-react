@@ -1,0 +1,26 @@
+.retryModal {
+    h3,
+    p {
+        text-align: center;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+        padding-bottom: 0.37rem;
+    }
+
+    p {
+        font-size: 1rem;
+        font-weight: var(--font-thin);
+        padding-bottom: 1.3rem;
+    }
+
+    .buttonGroup {
+        display: flex;
+        justify-content: center;
+
+        button:first-child {
+            margin-right: 0.62rem;
+        }
+    }
+}

@@ -3,13 +3,17 @@ import CounterList from "@/components/counter-list";
 import Searchbox from "@/components/searchbox";
 import { useCounters } from "@/services/counter";
 
-import "./counters.css";
 import { useSelectCounters } from "./counters.helper";
+import "./counters.css";
 
 function Counters() {
   const { isLoading, data, refetch, isError } = useCounters();
-  const { getOnSelectCounters, selectedCounters, isAnyCounterSelected } =
-    useSelectCounters();
+  const {
+    getOnSelectCounters,
+    selectedCounters,
+    isCounterSelected,
+    selectedCounterTitle,
+  } = useSelectCounters();
 
   return (
     <div id="counter-container">
@@ -27,7 +31,11 @@ function Counters() {
         />
       </div>
       <div>
-        <ActionNav showOptional={isAnyCounterSelected} />
+        <ActionNav
+          selectedCounterTitle={selectedCounterTitle}
+          showOptional={isCounterSelected}
+          selectedCounters={selectedCounters}
+        />
       </div>
     </div>
   );
