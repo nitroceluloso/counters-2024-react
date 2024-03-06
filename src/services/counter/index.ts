@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import {
   getCounters,
@@ -17,19 +18,21 @@ export function useCounters() {
     getCounters,
     queryOptions,
   );
-  // const [counterList, setCounterList] = useState<CounterListApi>([]);
-
-  // useEffect(() => {
-  //   setCounterList(data!);
-  // }, [data]);
+  const [filterQuery, setFilterQuery] = useState("");
+  const filteredCounters =
+    filterQuery === ""
+      ? data
+      : data!.filter((counter) => counter.title.includes(filterQuery));
 
   return {
     isLoading,
     isError,
-    data,
+    data: filteredCounters,
     error,
     refetch,
     isFetching,
+    setFilterQuery,
+    isFiltering: filterQuery !== "",
   };
 }
 

@@ -1,39 +1,46 @@
 import { CounterListApi } from "@/services/counter/counter.services";
 
+import CounterElement from "@/components/counter-element";
+import ButtonIcon from "@/components/button-icon";
+import { useUpateCounter } from "@/services/counter";
+
 import CounterLoading from "./components/counter-loading";
 import CounterEmpty from "./components/counter-empty";
-import CounterElement from "@/components/counter-element";
-import ButtonIcon from "../button-icon";
+import CounterFilterEmpty from "./components/counter-filter-empty";
 
-import { useUpateCounter } from "@/services/counter";
 import { getOnIncrementAndDecrement } from "./counterElement.helper";
 
 import "./counterList.css";
 import CounterListError from "./components/counter-error";
 
 type CounterListProps = {
-  list?: CounterListApi;
-  isLoading: boolean;
+  getOnSelectCounter: (id: string, title: string) => () => void;
   isError: boolean;
+  isFiltering: boolean;
+  isLoading: boolean;
+  list?: CounterListApi;
   refetch: () => void;
   selectedCounter: string | undefined;
-  getOnSelectCounter: (id: string, title: string) => () => void;
 };
 
 function CounterList({
-  list,
-  isLoading,
-  refetch,
-  isError,
-  selectedCounter,
   getOnSelectCounter,
+  isError,
+  isFiltering,
+  isLoading,
+  list,
+  refetch,
+  selectedCounter,
 }: CounterListProps) {
   const { mutateAsync: updateCounter } = useUpateCounter();
   const [onDecrement, onIncrement] = getOnIncrementAndDecrement(updateCounter);
 
   if (isLoading) return <CounterLoading />;
   if (isError) return <CounterListError retry={refetch} />;
-  if (!isLoading && !isError && list!.length === 0) return <CounterEmpty />;
+  if (!isLoading && !isError && list!.length === 0 && !isFiltering)
+    return <CounterEmpty />;
+  if (!isLoading && !isError && list!.length === 0 && isFiltering)
+    return <CounterFilterEmpty />;
 
   const itemsCount = list?.length;
   const itemsSum = list?.reduce((acm, act) => acm + act.count, 0);
