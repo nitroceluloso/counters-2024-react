@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import {
   getCounters,
@@ -8,28 +9,40 @@ import {
 import { COUNTER_QUERY_KEYS } from "./counter.constant";
 import { queryClient } from "@/App";
 
+function useFilter() {
+  const [filterQuery, setFilterQuery] = useState('');
+  const filterCounter = (data: CounterListApi | undefined) =>
+    filterQuery === '' ?
+    data :
+    data!.filter((counter) => counter.title.includes(filterQuery));
+
+  return {
+    filterQuery,
+    setFilterQuery,
+    filterCounter,
+  }
+}
+
 export function useCounters() {
   const queryOptions = {
     refetchOnWindowFocus: false,
   };
+  const { filterQuery, setFilterQuery, filterCounter } = useFilter();
   const { isLoading, isError, data, error, refetch, isFetching } = useQuery(
     COUNTER_QUERY_KEYS.GET_LIST,
     getCounters,
     queryOptions,
   );
-  // const [counterList, setCounterList] = useState<CounterListApi>([]);
-
-  // useEffect(() => {
-  //   setCounterList(data!);
-  // }, [data]);
 
   return {
     isLoading,
     isError,
-    data,
+    data: filterCounter(data),
     error,
     refetch,
     isFetching,
+    setFilterQuery,
+    isFiltering: filterQuery !== "",
   };
 }
 

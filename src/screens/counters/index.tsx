@@ -7,7 +7,7 @@ import { useSelectCounters } from "./counters.helper";
 import "./counters.css";
 
 function Counters() {
-  const { isLoading, data, refetch, isError } = useCounters();
+  const { isLoading, data, refetch, isError, setFilterQuery, isFiltering } = useCounters();
   const {
     getOnSelectCounters,
     selectedCounters,
@@ -18,16 +18,17 @@ function Counters() {
   return (
     <div id="counter-container">
       <div>
-        <Searchbox showAction={false} />
+        <Searchbox onFilter={setFilterQuery} />
       </div>
       <div>
         <CounterList
+          getOnSelectCounter={getOnSelectCounters}
+          isError={isError}
+          isFiltering={isFiltering}
           isLoading={isLoading}
           list={data}
-          isError={isError}
-          selectedCounter={selectedCounters}
-          getOnSelectCounter={getOnSelectCounters}
           refetch={refetch}
+          selectedCounter={selectedCounters}
         />
       </div>
       <div>
