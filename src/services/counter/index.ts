@@ -9,25 +9,35 @@ import {
 import { COUNTER_QUERY_KEYS } from "./counter.constant";
 import { queryClient } from "@/App";
 
+function useFilter() {
+  const [filterQuery, setFilterQuery] = useState('');
+  const filterCounter = (data: CounterListApi | undefined) =>
+    filterQuery === '' ?
+    data :
+    data!.filter((counter) => counter.title.includes(filterQuery));
+
+  return {
+    filterQuery,
+    setFilterQuery,
+    filterCounter,
+  }
+}
+
 export function useCounters() {
   const queryOptions = {
     refetchOnWindowFocus: false,
   };
+  const { filterQuery, setFilterQuery, filterCounter } = useFilter();
   const { isLoading, isError, data, error, refetch, isFetching } = useQuery(
     COUNTER_QUERY_KEYS.GET_LIST,
     getCounters,
     queryOptions,
   );
-  const [filterQuery, setFilterQuery] = useState("");
-  const filteredCounters =
-    filterQuery === ""
-      ? data
-      : data!.filter((counter) => counter.title.includes(filterQuery));
 
   return {
     isLoading,
     isError,
-    data: filteredCounters,
+    data: filterCounter(data),
     error,
     refetch,
     isFetching,
